@@ -2,7 +2,7 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-03 09:48:19
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-03 17:32:56
+# @Last Modified time: 2021-12-08 15:35:47
 import os
 import openai
 import speech_recognition as sr
@@ -55,18 +55,16 @@ while(1):
 		except sr.RequestError as e:
 			print("Could not request results from Speech Recognition service; {0}".format(e))
 
-	start_sequence = "\nAI:"
-	restart_sequence = "\n\nHuman: "
+
 
 	response = openai.Completion.create(
 	engine="davinci-instruct-beta-v3",
-	prompt="The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: tell me about openai\n\nAI: OpenAI is a non-profit AI research company.\nHuman: " + text,
+	prompt=text,
 	temperature=0.9,
 	max_tokens=150,
 	top_p=1,
-	frequency_penalty=0,
-	presence_penalty=0.64,
-	stop=["\n", " Human:", " AI:"]
+	frequency_penalty=0.35,
+	presence_penalty=0.6,
 	)
 	print(response.choices[0].text)
 	SpeakText(response.choices[0].text)

@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+# @Author: Mukhil Sundararaj
+# @Date:   2021-12-08 15:24:12
+# @Last Modified by:   Mukhil Sundararaj
+# @Last Modified time: 2021-12-08 15:37:35
 """
 A program to print 'hello world'
 
@@ -19,11 +24,6 @@ with sr.Microphone() as source:
     except:
         print("Sorry could not recognize what you said")
 
-
-"""
-A program to use GPT-3 Completion with speech as input
-
-"""
 
 
 
