@@ -2,7 +2,7 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-03 09:48:19
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-08 15:35:47
+# @Last Modified time: 2021-12-08 15:39:53
 import os
 import openai
 import speech_recognition as sr
@@ -25,17 +25,17 @@ def SpeakText(command):
 
 #Sample rate is how often values are recorded
 sample_rate = 16000
-#it is advisable to use powers of 2 such as 1024 or 2048
+#It is advisable to use powers of 2 such as 1024 or 2048
 chunk_size = 2048
 #Initialize the recognizer
 r = sr.Recognizer()
 while(1):
-	#use the microphone as source for input. Here, we also specify
+	#Use the microphone as source for input. Here, we also specify
 	#which device ID to specifically look for incase the microphone
 	#is not working, an error will pop up saying "device_id undefined"
 	with sr.Microphone(device_index = 1, sample_rate = sample_rate,
 							chunk_size = chunk_size) as source:
-		#wait for a second to let the recognizer adjust the
+		#Wait for a second to let the recognizer adjust the
 		#energy threshold based on the surrounding noise level
 		r.adjust_for_ambient_noise(source)
 		print ("I'm listening...")
@@ -47,7 +47,7 @@ while(1):
 			text = r.recognize_google(audio)
 			print (text + "\n")
 		
-		#error occurs when google could not understand what was said
+		#Error occurs when google could not understand what was said
 		
 		except sr.UnknownValueError:
 			print("Speech Recognition could not understand audio")
@@ -56,7 +56,7 @@ while(1):
 			print("Could not request results from Speech Recognition service; {0}".format(e))
 
 
-
+	#GPT-3 API Call
 	response = openai.Completion.create(
 	engine="davinci-instruct-beta-v3",
 	prompt=text,
@@ -66,5 +66,7 @@ while(1):
 	frequency_penalty=0.35,
 	presence_penalty=0.6,
 	)
+	
+	#GPT-3 TTS 
 	print(response.choices[0].text)
 	SpeakText(response.choices[0].text)
