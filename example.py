@@ -2,8 +2,10 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-03 09:48:19
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-08 15:39:53
+# @Last Modified time: 2021-12-10 12:54:43
+from genericpath import getsize
 import os
+from sys import getsizeof
 import openai
 import speech_recognition as sr
 import pyttsx3
@@ -20,15 +22,20 @@ def SpeakText(command):
 	
 	# Initialize the engine
 	engine = pyttsx3.init()
+	# Use male voice	
+	voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_DAVID_11.0"
+	engine.setProperty('voice', voice_id)
 	engine.say(command)
 	engine.runAndWait()
 
 #Sample rate is how often values are recorded
-sample_rate = 16000
+sample_rate = 24000
 #It is advisable to use powers of 2 such as 1024 or 2048
 chunk_size = 2048
 #Initialize the recognizer
 r = sr.Recognizer()
+
+text = ""
 while(1):
 	#Use the microphone as source for input. Here, we also specify
 	#which device ID to specifically look for incase the microphone
@@ -42,9 +49,9 @@ while(1):
 		SpeakText("I'm listening")
 		#listens for the user's input
 		audio = r.listen(source)
-			
+		
 		try:
-			text = r.recognize_google(audio)
+			text += r.recognize_google(audio)
 			print (text + "\n")
 		
 		#Error occurs when google could not understand what was said
@@ -60,13 +67,20 @@ while(1):
 	response = openai.Completion.create(
 	engine="davinci-instruct-beta-v3",
 	prompt=text,
-	temperature=0.9,
+	temperature=0.7,
 	max_tokens=150,
 	top_p=1,
 	frequency_penalty=0.35,
-	presence_penalty=0.6,
+	presence_penalty=0.64,
 	)
 	
 	#GPT-3 TTS 
 	print(response.choices[0].text)
 	SpeakText(response.choices[0].text)
+
+	#Conversation memory
+	text += response.choices[0].text
+	s= getsizeof(text)
+	if(s > 150):
+		text=""
+	print(text)
