@@ -2,16 +2,17 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-03 09:48:19
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-13 15:53:19
+# @Last Modified time: 2021-12-13 17:49:30
 from genericpath import getsize
 import os
 from sys import getsizeof
 import openai
 import speech_recognition as sr
 import pyttsx3
+import cred
 
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = cred.OPENAI_API_KEY
 
 # Initialize the recognizer
 r = sr.Recognizer()
