@@ -2,7 +2,7 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-03 09:48:19
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-10 12:54:43
+# @Last Modified time: 2021-12-13 15:50:37
 from genericpath import getsize
 import os
 from sys import getsizeof
@@ -83,4 +83,3 @@ while(1):
 	s= getsizeof(text)
 	if(s > 150):
 		text=""
-	print(text)
