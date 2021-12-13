@@ -2,7 +2,7 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-03 09:48:19
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-13 15:50:37
+# @Last Modified time: 2021-12-13 15:53:19
 from genericpath import getsize
 import os
 from sys import getsizeof
@@ -16,8 +16,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 # Initialize the recognizer
 r = sr.Recognizer()
 
-# Function to convert text to
-# speech
+# Function to convert text to speech
 def SpeakText(command):
 	
 	# Initialize the engine
@@ -37,9 +36,11 @@ r = sr.Recognizer()
 
 text = ""
 while(1):
+	 
 	#Use the microphone as source for input. Here, we also specify
 	#which device ID to specifically look for incase the microphone
-	#is not working, an error will pop up saying "device_id undefined"
+	#is not working, an error will pop up saying 'device_id undefined' 
+
 	with sr.Microphone(device_index = 1, sample_rate = sample_rate,
 							chunk_size = chunk_size) as source:
 		#Wait for a second to let the recognizer adjust the
