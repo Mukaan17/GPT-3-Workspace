@@ -2,8 +2,7 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-03 09:48:19
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-13 15:53:19
-from genericpath import getsize
+# @Last Modified time: 2021-12-13 15:54:19
 import os
 from sys import getsizeof
 import openai
