@@ -2,7 +2,7 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-03 09:48:19
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-16 11:23:30
+# @Last Modified time: 2021-12-16 11:24:11
 from genericpath import getsize
 import os
 from sys import getsizeof
@@ -83,6 +83,6 @@ while(1):
 	#Conversation memory
 	text += '\n'
 	text += response.choices[0].text
-	s= getsizeof(text)
+	s = getsizeof(text)
 	if(s > 512):
 		text=""
