@@ -2,7 +2,7 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-03 09:48:19
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-13 17:49:30
+# @Last Modified time: 2021-12-16 11:13:56
 from genericpath import getsize
 import os
 from sys import getsizeof
@@ -70,7 +70,7 @@ while(1):
 	engine="davinci-instruct-beta-v3",
 	prompt=text,
 	temperature=0.7,
-	max_tokens=150,
+	max_tokens=1024,
 	top_p=1,
 	frequency_penalty=0.35,
 	presence_penalty=0.64,
