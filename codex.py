@@ -2,13 +2,15 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-13 16:06:06
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-20 12:54:43
+# @Last Modified time: 2021-12-20 13:01:36
 
 import os
 import openai
 import pyttsx3
 import speech_recognition as sr
 import cred
+
+#openai.api_key = os.getenv("OPENAI_API_KEY")I
 
 openai.api_key = cred.OPENAI_API_KEY
 
