@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 # @Author: Mukhil Sundararaj
-# @Date:   2021-12-13 16:06:06
+# @Date:   2021-12-28 11:48:40
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-28 12:24:36
-
+# @Last Modified time: 2021-12-28 12:19:57
 import os
 import openai
-import pyttsx3
 import speech_recognition as sr
+import pyttsx3
+import cred
 
+#openai.api_key = cred.OPENAI_API_KEY
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Initialize the recognizer
@@ -32,8 +33,9 @@ chunk_size = 2048
 #Initialize the recognizer
 r = sr.Recognizer()
 
+
 while(1):
-	 
+	text = ""
 	#Use the microphone as source for input. Here, we also specify
 	#which device ID to specifically look for incase the microphone
 	#is not working, an error will pop up saying 'device_id undefined' 
@@ -43,13 +45,13 @@ while(1):
 		#Wait for a second to let the recognizer adjust the
 		#energy threshold based on the surrounding noise level
 		r.adjust_for_ambient_noise(source)
-		print ("\n Please provide your problem statement:")
-		SpeakText("Please provide your problem statement")
+		print ("What do you want?")
+		SpeakText("What do you want?")
 		#listens for the user's input
 		audio = r.listen(source)
 		
 		try:
-			text = r.recognize_google(audio)
+			text += r.recognize_google(audio)
 			print (text + "\n")
 		
 		#Error occurs when google could not understand what was said
@@ -61,16 +63,16 @@ while(1):
 			print("Could not request results from Speech Recognition service; {0}".format(e))
 
 
-	#GPT-3 API Call
+	start_sequence = "You:"
 	response = openai.Completion.create(
-        engine="davinci-codex",
-        prompt=text,
-        temperature=0.5,
-        max_tokens=1024,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0
+        engine="davinci-codex", 
+        prompt="Marv is a chatbot that reluctantly answers questions.\nYou:"+ text + "? \n",
+        temperature=0.3,
+        max_tokens=20,
+        top_p=0.3,
+        frequency_penalty=0.5,
+        presence_penalty=0,
+        stop=["\n\n"]
     )
-	
-	#GPT-3 TTS 
 	print(response.choices[0].text)
+	SpeakText(response.choices[0].text)
