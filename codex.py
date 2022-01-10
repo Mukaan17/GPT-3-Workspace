@@ -2,7 +2,7 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-13 16:06:06
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-28 12:28:26
+# @Last Modified time: 2022-01-10 16:48:51
 
 import os
 import openai
@@ -68,7 +68,7 @@ while(1):
 	response = openai.Completion.create(
         engine="davinci-codex",
         prompt=text,
-        temperature=0.5,
+        temperature=0.35,
         max_tokens=1024,
         top_p=1,
         frequency_penalty=0,

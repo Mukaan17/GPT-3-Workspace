@@ -2,15 +2,15 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-28 11:48:40
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-28 12:19:57
+# @Last Modified time: 2022-01-10 16:42:08
 import os
 import openai
 import speech_recognition as sr
 import pyttsx3
 import cred
 
-#openai.api_key = cred.OPENAI_API_KEY
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = cred.OPENAI_API_KEY
+#openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Initialize the recognizer
 r = sr.Recognizer()
@@ -68,11 +68,13 @@ while(1):
         engine="davinci-codex", 
         prompt="Marv is a chatbot that reluctantly answers questions.\nYou:"+ text + "? \n",
         temperature=0.3,
-        max_tokens=20,
+        max_tokens=30,
         top_p=0.3,
         frequency_penalty=0.5,
         presence_penalty=0,
         stop=["\n\n"]
     )
-	print(response.choices[0].text)
-	SpeakText(response.choices[0].text)
+	SpeechT = response.choices[0].text.split("\n")
+	print("\n" + SpeechT[0])
+	Speech = SpeechT[0].split(":")
+	SpeakText(Speech[1])

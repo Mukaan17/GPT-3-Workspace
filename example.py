@@ -2,7 +2,7 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-03 09:48:19
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2021-12-20 13:02:15
+# @Last Modified time: 2022-01-10 17:00:54
 from genericpath import getsize
 import os
 from sys import getsizeof
@@ -36,8 +36,8 @@ chunk_size = 2048
 #Initialize the recognizer
 r = sr.Recognizer()
 
-text = ""
 while(1):
+	text = ""
 	 
 	#Use the microphone as source for input. Here, we also specify
 	#which device ID to specifically look for incase the microphone
@@ -61,9 +61,11 @@ while(1):
 		
 		except sr.UnknownValueError:
 			print("Speech Recognition could not understand audio")
+			text = "Tell me you couldn't hear me"
 		
 		except sr.RequestError as e:
 			print("Could not request results from Speech Recognition service; {0}".format(e))
+			text = "Tell me you couldn't hear me"
 
 
 	#GPT-3 API Call
@@ -78,12 +80,7 @@ while(1):
 	)
 	
 	#GPT-3 TTS 
-	print(response.choices[0].text)
-	SpeakText(response.choices[0].text)
-
-	#Conversation memory
-	text += '\n'
-	text += response.choices[0].text
-	s = getsizeof(text)
-	if(s > 512):
-		text=""
+	#print(response.choices[0].text)
+	SpeechT = response.choices[0].text.split("\n\n")
+	print(SpeechT[1])
+	SpeakText(SpeechT[1])
