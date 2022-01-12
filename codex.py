@@ -2,9 +2,7 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-13 16:06:06
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2022-01-12 18:14:41
-
-import os
+# @Last Modified time: 2022-01-12 18:30:01
 import openai
 import pyttsx3
 import speech_recognition as sr
