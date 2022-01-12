@@ -2,62 +2,45 @@
 # @Author: Mukhil Sundararaj
 # @Date:   2021-12-03 09:48:19
 # @Last Modified by:   Mukhil Sundararaj
-# @Last Modified time: 2022-01-10 17:00:54
+# @Last Modified time: 2022-01-12 18:13:36
 from genericpath import getsize
-import os
 from sys import getsizeof
 import openai
 import speech_recognition as sr
 import pyttsx3
 import cred
+import config
 
-#openai.api_key = os.getenv("OPENAI_API_KEY")
 
 openai.api_key = cred.OPENAI_API_KEY
 
-# Initialize the recognizer
-r = sr.Recognizer()
 
 # Function to convert text to speech
 def SpeakText(command):
 	
 	# Initialize the engine
 	engine = pyttsx3.init()
-	# Use male voice	
-	voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_DAVID_11.0"
+	voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0"
 	engine.setProperty('voice', voice_id)
 	engine.say(command)
 	engine.runAndWait()
 
-#Sample rate is how often values are recorded
-sample_rate = 24000
-#It is advisable to use powers of 2 such as 1024 or 2048
-chunk_size = 2048
-#Initialize the recognizer
+sample_rate = config.sampleRate
+chunk_size = config.chunkSize
 r = sr.Recognizer()
 
 while(1):
 	text = ""
-	 
-	#Use the microphone as source for input. Here, we also specify
-	#which device ID to specifically look for incase the microphone
-	#is not working, an error will pop up saying 'device_id undefined' 
 
-	with sr.Microphone(device_index = 1, sample_rate = sample_rate,
-							chunk_size = chunk_size) as source:
-		#Wait for a second to let the recognizer adjust the
-		#energy threshold based on the surrounding noise level
+	with sr.Microphone(device_index = 1, sample_rate = sample_rate,chunk_size = chunk_size) as source:
 		r.adjust_for_ambient_noise(source)
-		print ("I'm listening...")
-		SpeakText("I'm listening")
-		#listens for the user's input
+		print ("Ask me anything...")
+		SpeakText("Ask me anything")
 		audio = r.listen(source)
 		
 		try:
 			text += r.recognize_google(audio)
 			print (text + "\n")
-		
-		#Error occurs when google could not understand what was said
 		
 		except sr.UnknownValueError:
 			print("Speech Recognition could not understand audio")
@@ -80,7 +63,6 @@ while(1):
 	)
 	
 	#GPT-3 TTS 
-	#print(response.choices[0].text)
 	SpeechT = response.choices[0].text.split("\n\n")
 	print(SpeechT[1])
 	SpeakText(SpeechT[1])
